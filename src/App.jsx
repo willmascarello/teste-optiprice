@@ -35,6 +35,17 @@ function App() {
     setOptipriceDataFiltered(filteredData);
   }, [searchTerm, filterBy])
 
+  const handleEdit = (id, field, value) => {
+    const updatedData = optipriceData.map(post => {
+      if (post.id === id) {
+        return { ...post, [field]: value };
+      }
+      return post;
+    });
+    setOptipriceData(updatedData);
+    setOptipriceDataFiltered(updatedData);
+  };
+
   return (
     <>   
       <div className="flex items-center justify-between py-4 dark:border-gray-700">
@@ -67,17 +78,14 @@ function App() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-6 py-3 w-1/12">
                           User ID
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-6 py-3 w-5/12">
                           Title
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-6 py-3 w-6/12">
                           Body
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                          Action
                       </th>
                   </tr>
               </thead>
@@ -87,14 +95,25 @@ function App() {
                       <td className="px-6 py-4">
                           {post.userId}
                       </td>
-                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                          {post.title}
-                      </th>
-                      <td className="px-6 py-4">
-                          {post.body}
+                      <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          <input
+                            type="text"
+                            value={post.title}
+                            maxLength={100}
+                            onChange={(e) => handleEdit(post.id, 'title', e.target.value)}
+                            className="p-2 w-full bg-transparent border-none"
+                          />
                       </td>
                       <td className="px-6 py-4">
-                          <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                          <textarea
+                            cols="100"
+                            rows="4"
+                            maxLength="500"
+                            type="text"
+                            value={post.body}
+                            onChange={(e) => handleEdit(post.id, 'body', e.target.value)}
+                            className="p-2 w-full h-auto bg-transparent border-none resize-none"
+                          />
                       </td>
                   </tr>
                 ))}
