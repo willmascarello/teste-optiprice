@@ -1,12 +1,18 @@
-# React + Vite
+# Teste prático de front-end para a empresa OptiPrice utilizando React com Vite e Tailwind CSS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Objetivos: 
+1. Consumir os dados de uma API pública.
+2. Mostrar os dados em uma tabela interativa.
+3. Construir um campo de busca automática conforme o usuário digita.
+4. Permitir editar um campo diretamente na tabela (inline editing).
+5. Aplicar um estilo básico para uma boa experiência visual.
 
-Currently, two official plugins are available:
+## Para rodar o projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Baixar o projeto deste repositório.
 
-## Expanding the ESLint configuration
+2. Rodar o comando: 
+### `npm install`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+3. Rodar o comando: 
+### `npm run dev`

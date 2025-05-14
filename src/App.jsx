@@ -49,7 +49,7 @@ function App() {
   return (
     <>   
       <div className="flex items-center justify-between py-4 dark:border-gray-700">
-        <div className="pb-4">
+        <div className="pb-4 mr-10">
           <label htmlFor="table-search" className="sr-only">Search</label>
           <div className="relative mt-1">
               <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -73,7 +73,8 @@ function App() {
         </div>
       </div>
 
-      
+      {optipriceDataFiltered.length === 0 ? <p className="text-sm text-gray-500 dark:text-gray-400 px-6 py-4">No results found</p> :
+
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -120,6 +121,8 @@ function App() {
               </tbody>
           </table>
       </div>
+
+      }
 
     </>
   )

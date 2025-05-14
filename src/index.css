@@ -27,11 +27,10 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
 
 .default-height {
-  height: 2.5rem; /* Adjust as needed */
+  height: 2.5rem;
 }
