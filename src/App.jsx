@@ -4,15 +4,15 @@ import './App.css'
 
 function App() {
   const [optipriceData, setOptipriceData] = useState([])
+  const [usersData, setUsersData] = useState([])
   const [optipriceDataFiltered, setOptipriceDataFiltered] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [filterBy, setFilterBy] = useState('all')
 
   useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/posts')
+    axios.get('https://jsonplaceholder.typicode.com/users')
         .then(response => {
-          setOptipriceData(response.data)
-          setOptipriceDataFiltered(response.data)
+          setUsersData(response.data)
         })
         .catch(error => {
           console.error('Error:', error)
@@ -20,15 +20,43 @@ function App() {
     }, [])
 
   useEffect(() => {
+    axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(response => {
+          if(usersData.length > 0) {
+            const updatedData = response.data.map(post => {
+              const user = usersData.find(user => user.id === post.userId);
+              return {
+                ...post,
+                userId: user ? user.name : 'Unknown'
+              };
+            });
+            setOptipriceData(updatedData)
+            setOptipriceDataFiltered(updatedData)
+          } else {
+            setOptipriceData(response.data)
+            setOptipriceDataFiltered(response.data)
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error)
+        })
+    }, [usersData])
+
+
+
+  useEffect(() => {
     const filteredData = optipriceData.filter(item => {
       return (
+        filterBy === 'name' ?
+          item.userId.toLowerCase().includes(searchTerm.toLowerCase()) :
         filterBy === 'title' ?
           item.title.toLowerCase().includes(searchTerm.toLowerCase()) :
-          filterBy === 'body' ?
-            item.body.toLowerCase().includes(searchTerm.toLowerCase()) : 
-            // all
-            item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.body.toLowerCase().includes(searchTerm.toLowerCase()) 
+        filterBy === 'body' ?
+          item.body.toLowerCase().includes(searchTerm.toLowerCase()) : 
+          // all
+          item.userId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.body.toLowerCase().includes(searchTerm.toLowerCase()) 
       );
     });
 
@@ -66,7 +94,8 @@ function App() {
           <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 default-height"
           onChange={(e) => setFilterBy(e.target.value)} 
           >
-            <option defaultValue value="all">Title and Body</option>
+            <option defaultValue value="all">Name, Title and Body</option>
+            <option value="name">Name</option>
             <option value="title">Title</option>
             <option value="body">Body</option>
           </select>
@@ -79,13 +108,13 @@ function App() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
-                      <th scope="col" className="px-6 py-3 w-1/12">
-                          User ID
+                      <th scope="col" className="px-6 py-3 w-2/12">
+                          User Name
                       </th>
                       <th scope="col" className="px-6 py-3 w-5/12">
                           Title
                       </th>
-                      <th scope="col" className="px-6 py-3 w-6/12">
+                      <th scope="col" className="px-6 py-3 w-5/12">
                           Body
                       </th>
                   </tr>
